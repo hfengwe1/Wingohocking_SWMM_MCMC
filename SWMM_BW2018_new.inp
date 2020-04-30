@@ -1,0 +1,319 @@
+[TITLE]
+;;Project Title/Notes
+
+[OPTIONS]
+;;Option             Value
+FLOW_UNITS           CFS
+INFILTRATION         GREEN_AMPT
+FLOW_ROUTING         KINWAVE
+LINK_OFFSETS         DEPTH
+MIN_SLOPE            0
+ALLOW_PONDING        NO
+SKIP_STEADY_STATE    NO
+
+START_DATE           01/01/1980
+START_TIME           00:00:00
+REPORT_START_DATE    01/01/1980
+REPORT_START_TIME    00:00:00
+END_DATE             01/01/1981
+END_TIME             00:00:00
+SWEEP_START          01/01
+SWEEP_END            12/31
+DRY_DAYS             0
+REPORT_STEP          00:05:00
+WET_STEP             00:05:00
+DRY_STEP             01:00:00
+ROUTING_STEP         0:00:30 
+
+INERTIAL_DAMPING     PARTIAL
+NORMAL_FLOW_LIMITED  BOTH
+FORCE_MAIN_EQUATION  H-W
+VARIABLE_STEP        0.75
+LENGTHENING_STEP     0
+MIN_SURFAREA         12.557
+MAX_TRIALS           8
+HEAD_TOLERANCE       0.005
+SYS_FLOW_TOL         5
+LAT_FLOW_TOL         5
+MINIMUM_STEP         0.5
+THREADS              2
+
+[EVAPORATION]
+;;Data Source    Parameters
+;;-------------- ----------------
+TEMPERATURE 
+DRY_ONLY         NO
+
+[TEMPERATURE]
+;;Data Element     Values     
+FILE               "daily_temp_1980_2013.txt"
+WINDSPEED MONTHLY  0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+SNOWMELT           34 0.5 0.6 0.0 50.0 0.0
+ADC IMPERVIOUS     1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+ADC PERVIOUS       1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+
+[RAINGAGES]
+;;Name           Format    Interval SCF      Source    
+;;-------------- --------- ------ ------ ----------
+RainGage         INTENSITY 1:00     1.0      FILE       "hourly_preci_1980_2013.txt" 80012      IN   
+
+[SUBCATCHMENTS]
+;;Name           Rain Gage        Outlet           Area     %Imperv  Width    %Slope   CurbLen  SnowPack        
+;;-------------- ---------------- ---------------- -------- -------- -------- -------- -------- ----------------
+UrbanLand        RainGage         J1               2101.45  53.9     12467    6.49     0                        
+UrbanComplex     RainGage         J2               1810.26  56       12467    6.17     0                        
+Manor            RainGage         J3               1218.9   55.6     9843     4.69     0                        
+
+[SUBAREAS]
+;;Subcatchment   N-Imperv   N-Perv     S-Imperv   S-Perv     PctZero    RouteTo    PctRouted 
+;;-------------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+UrbanLand        0.01       0.1        0.05       0.15       25         OUTLET    
+UrbanComplex     0.01       0.1        0.05       0.15       25         OUTLET    
+Manor            0.01       0.1        0.05       0.15       25         OUTLET    
+
+[INFILTRATION]
+;;Subcatchment   Suction    Ksat       IMD       
+;;-------------- ---------- ---------- ----------
+UrbanLand        8.67       0.3        0.4       
+UrbanComplex     8.67       0.3        0.4       
+Manor            8.67       0.3        0.4       
+
+[LID_CONTROLS]
+;;Name           Type/Layer Parameters
+;;-------------- ---------- ----------
+RG               BC
+RG               SURFACE    2          0.1        0.1        1.0        5         
+RG               SOIL       12         0.5        0.2        0.1        1          35         8.4668    
+RG               STORAGE    12         0.5        0.5        0         
+RG               DRAIN      0          0.5        6          6         
+
+Trench           IT
+Trench           SURFACE    6          0.0        0.1        1.0        5         
+Trench           STORAGE    18         0.5        0.5        0         
+Trench           DRAIN      0          0.5        6          6         
+
+RainBarrel       RB
+RainBarrel       STORAGE    36         0.75       0.5        0         
+RainBarrel       DRAIN      0.5        0.1        0          24        
+
+GreenRoof        GR
+GreenRoof        SURFACE    1          0.0        0.1        1.0        5         
+GreenRoof        SOIL       3          0.5        0.2        0.1        0.5        35         3.5       
+GreenRoof        DRAINMAT   1          0.5        0.1       
+
+PP               PP
+PP               SURFACE    0.0        0.0        0.1        1.0        5         
+PP               PAVEMENT   6          0.2        0          100        0         
+PP               STORAGE    6          0.5        0.5        0         
+PP               DRAIN      0          0.5        6          6         
+
+[LID_USAGE]
+;;Subcatchment   LID Process      Number  Area       Width      InitSat    FromImp    ToPerv     RptFile                  DrainTo         
+;;-------------- ---------------- ------- ---------- ---------- ---------- ---------- ---------- ------------------------ ----------------
+UrbanLand        RG               0       43560      871.2      0          0          0         
+UrbanLand        Trench           0       43560      871.2      0          0          0         
+UrbanLand        RainBarrel       0       43560      2178       0          0          0         
+UrbanLand        GreenRoof        0       43560      0          0          0          0         
+UrbanLand        PP               0       43560      0          0          0          0         
+UrbanComplex     RG               0       43560      871.2      0          0          0         
+UrbanComplex     Trench           0       43560      871.2      0          0          0         
+UrbanComplex     RainBarrel       0       43560      2178       0          0          0         
+UrbanComplex     GreenRoof        0       43560      0          0          0          0         
+UrbanComplex     PP               0       43560      0          0          0          0         
+Manor            RG               0       43560      871.2      0          0          0         
+Manor            Trench           0       43560      871.2      0          0          0         
+Manor            RainBarrel       0       43560      2178       0          0          0         
+Manor            GreenRoof        0       43560      0          0          0          0         
+Manor            PP               0       43560      0          0          0          0         
+
+[JUNCTIONS]
+;;Name           Elevation  MaxDepth   InitDepth  SurDepth   Aponded   
+;;-------------- ---------- ---------- ---------- ---------- ----------
+J1               328        30         0          0          0         
+J2               164        20         0          0          0         
+J3               82         20         0          0          0         
+
+[OUTFALLS]
+;;Name           Elevation  Type       Stage Data       Gated    Route To        
+;;-------------- ---------- ---------- ---------------- -------- ----------------
+O1               49         FREE                        NO                       
+
+[CONDUITS]
+;;Name           From Node        To Node          Length     Roughness  InOffset   OutOffset  InitFlow   MaxFlow   
+;;-------------- ---------------- ---------------- ---------- ---------- ---------- ---------- ---------- ----------
+C1               J1               J2               9843       0.013      0          0          0          0         
+C2               J2               J3               9843       0.013      0          0          0          0         
+C3               J3               O1               5906       0.013      0          0          0          0         
+
+[XSECTIONS]
+;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   
+;;-------------- ------------ ---------------- ---------- ---------- ---------- ---------- ----------
+C1               RECT_OPEN    10               30         0          0          1                    
+C2               RECT_OPEN    10               30         0          0          1                    
+C3               RECT_OPEN    10               30         0          0          1                    
+
+[REPORT]
+;;Reporting Options
+INPUT      NO
+CONTROLS   NO
+SUBCATCHMENTS ALL
+NODES ALL
+LINKS ALL
+
+[TAGS]
+
+[MAP]
+DIMENSIONS 0.000 0.000 10000.000 10000.000
+Units      None
+
+[COORDINATES]
+;;Node           X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+J1               2349.166           6527.599          
+J2               4184.852           4152.760          
+J3               7265.725           2111.682          
+O1               9268.018           1880.631          
+
+[VERTICES]
+;;Link           X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+
+[Polygons]
+;;Subcatchment   X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+UrbanLand        1071.829           7575.758          
+UrbanLand        1071.829           7575.758          
+UrbanLand        813.692            7340.067          
+UrbanLand        847.363            7160.494          
+UrbanLand        1318.743           7014.590          
+UrbanLand        1576.880           6251.403          
+UrbanLand        1891.134           5824.916          
+UrbanLand        1655.443           5510.662          
+UrbanLand        1767.677           4231.201          
+UrbanLand        2037.037           4242.424          
+UrbanLand        2239.057           4163.861          
+UrbanLand        2317.621           4107.744          
+UrbanLand        2407.407           3905.724          
+UrbanLand        2755.331           4421.998          
+UrbanLand        3193.042           4466.891          
+UrbanLand        3114.478           4668.911          
+UrbanLand        3338.945           4938.272          
+UrbanLand        3754.209           5252.525          
+UrbanLand        3731.762           5353.535          
+UrbanLand        3518.519           5488.215          
+UrbanLand        4450.056           6666.667          
+UrbanLand        4281.706           7182.941          
+UrbanLand        4360.269           7384.961          
+UrbanLand        4057.239           7912.458          
+UrbanLand        3664.422           8226.712          
+UrbanLand        3215.488           8709.315          
+UrbanLand        2519.641           9012.346          
+UrbanLand        1857.464           9046.016          
+UrbanLand        1554.433           8810.325          
+UrbanLand        1700.337           8428.732          
+UrbanLand        1588.103           8260.382          
+UrbanLand        1397.306           8237.935          
+UrbanLand        1296.296           8159.371          
+UrbanLand        1004.489           8069.585          
+UrbanLand        959.596            7957.351          
+UrbanLand        1071.829           7800.224          
+UrbanLand        1015.713           7519.641          
+UrbanLand        802.469            7373.737          
+UrbanComplex     2418.631           3905.724          
+UrbanComplex     2418.631           3905.724          
+UrbanComplex     2766.554           4433.221          
+UrbanComplex     3193.042           4455.668          
+UrbanComplex     3125.701           4691.358          
+UrbanComplex     3350.168           4927.048          
+UrbanComplex     3765.432           5241.302          
+UrbanComplex     3731.762           5308.642          
+UrbanComplex     3518.519           5488.215          
+UrbanComplex     4450.056           6632.997          
+UrbanComplex     4270.483           7171.717          
+UrbanComplex     4360.269           7373.737          
+UrbanComplex     4551.066           7194.164          
+UrbanComplex     4494.949           7059.484          
+UrbanComplex     4652.076           6823.793          
+UrbanComplex     4696.970           6498.316          
+UrbanComplex     4854.097           6408.530          
+UrbanComplex     4898.990           5881.033          
+UrbanComplex     5044.893           5735.129          
+UrbanComplex     5213.244           5735.129          
+UrbanComplex     5572.391           5297.419          
+UrbanComplex     5527.497           4523.008          
+UrbanComplex     5561.167           4545.455          
+UrbanComplex     5796.857           4017.957          
+UrbanComplex     5505.051           3714.927          
+UrbanComplex     5516.274           3490.460          
+UrbanComplex     5347.924           3479.237          
+UrbanComplex     5168.350           2031.425          
+UrbanComplex     5101.010           1885.522          
+UrbanComplex     4955.107           2020.202          
+UrbanComplex     4797.980           1863.075          
+UrbanComplex     4326.599           1851.852          
+UrbanComplex     4225.589           1907.969          
+UrbanComplex     4012.346           2300.786          
+UrbanComplex     3439.955           2267.116          
+UrbanComplex     3249.158           2457.912          
+UrbanComplex     3249.158           2615.039          
+UrbanComplex     2811.448           2570.146          
+UrbanComplex     3024.691           3097.643          
+UrbanComplex     2901.235           3221.100          
+UrbanComplex     2845.118           3546.577          
+UrbanComplex     2732.884           3647.587          
+UrbanComplex     2463.524           3613.917          
+UrbanComplex     2418.631           3894.501          
+Manor            5123.457           1896.745          
+Manor            5123.457           1896.745          
+Manor            5179.574           1997.755          
+Manor            5347.924           3468.013          
+Manor            5527.497           3479.237          
+Manor            5505.051           3726.150          
+Manor            5864.198           3400.673          
+Manor            5886.644           3265.993          
+Manor            6066.218           3209.877          
+Manor            6178.451           3277.217          
+Manor            7312.009           3019.080          
+Manor            7413.019           2828.283          
+Manor            7648.709           3052.750          
+Manor            7637.486           3142.536          
+Manor            7794.613           3187.430          
+Manor            7985.410           3041.526          
+Manor            8153.760           2682.379          
+Manor            8468.013           2446.689          
+Manor            8546.577           2525.253          
+Manor            8748.597           2368.126          
+Manor            8928.171           2401.796          
+Manor            8916.947           2233.446          
+Manor            9208.754           2053.872          
+Manor            9253.648           1840.629          
+Manor            8973.064           1739.618          
+Manor            8961.841           1593.715          
+Manor            8804.714           1447.811          
+Manor            8670.034           1672.278          
+Manor            8389.450           1705.948          
+Manor            8265.993           1537.598          
+Manor            7974.186           1481.481          
+Manor            7996.633           1268.238          
+Manor            7267.116           909.091           
+Manor            7154.882           965.208           
+Manor            6941.639           897.868           
+Manor            6818.182           1156.004          
+Manor            6369.248           953.984           
+Manor            6088.664           1223.345          
+Manor            5897.868           1425.365          
+Manor            5920.314           1638.608          
+Manor            5650.954           1919.192          
+Manor            5561.167           1806.958          
+Manor            5168.350           1941.639          
+Manor            5112.233           1885.522          
+
+[SYMBOLS]
+;;Gage           X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+RainGage         10534.398          5687.961          
+
+
+[BACKDROP]
+FILE       "C:\School\3rd paper - case study\00. My notes\Watershed Delineation 0424\3Subs_w_basemap_0426.jpg"
+DIMENSIONS 0.000 0.000 10000.000 10000.000
